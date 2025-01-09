@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"  # Exposing port 8080 on the host to port 80 in the Nginx container
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api1
+      - api2
+      - api3
+      - api4 
+      - redis
+    networks:
+      - webnet
+
+  api1:
+    image: animeapi:latest    
+    networks:
+      - webnet
+
+  api2:
+    image: animeapi:latest    
+    networks:
+      - webnet
+
+  api3:
+    image: animeapi:latest    
+    networks:
+      - webnet
+
+  api4:
+    image: animeapi:latest    
+    networks:
+      - webnet
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - webnet
+ 
+networks:
+  webnet: {}
